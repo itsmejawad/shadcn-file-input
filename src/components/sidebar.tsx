@@ -29,7 +29,14 @@ const DesktopSidebar = ({
                 pathname === link.href && "font-semibold text-primary"
               )}
               key={link.href}>
-              <Link href={link.href}>{link.label}</Link>
+              <Link className="flex items-center justify-between" href={link.href}>
+                {link.label}
+                {pathname === link.href && (
+                  <span className="text-primary">
+                    <ArrowLeft size={16} />
+                  </span>
+                )}
+              </Link>{" "}
             </li>
           ))}
         </ul>
