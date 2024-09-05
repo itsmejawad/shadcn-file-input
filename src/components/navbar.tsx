@@ -6,8 +6,8 @@ import { GitHubLogoIcon } from "@radix-ui/react-icons";
 
 const Navbar = () => {
   return (
-    <header className=" py-4  border-b">
-      <nav className=" flex justify-between items-center mx-auto max-w-screen-xl">
+    <header className="py-4 border-b sticky top-0 bg-background">
+      <nav className=" flex justify-between items-center mx-auto max-w-screen-2xl px-5">
         <Button className="bg-primary/10" variant="ghost" asChild>
           <Link href="/" className="font-semibold">
             shadcn/ui File Input
