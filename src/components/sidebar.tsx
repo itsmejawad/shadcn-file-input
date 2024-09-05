@@ -1,14 +1,82 @@
 "use client";
 
 import Link from "next/link";
-
 import { usePathname } from "next/navigation";
-import { cn } from "../lib/utils";
 
-const Sidebar = () => {
+// Utils
+import { cn } from "@/lib/utils";
+
+// Types
+import { SidebarLinks } from "@/types/SidebarLinks";
+import { ArrowLeft } from "lucide-react";
+
+const DesktopSidebar = ({
+  pathname,
+  sidebarLinks,
+}: {
+  pathname: string;
+  sidebarLinks: SidebarLinks;
+}) => {
+  return (
+    <aside className="min-w-72 px-5 py-5 hidden lg:block border-r">
+      {sidebarLinks.map((sidebarLink) => (
+        <ul key={sidebarLink.title} className="flex flex-col gap-1.5 sticky top-24 mb-8 last:mb-0">
+          <li className="font-semibold">{sidebarLink.title}</li>
+          {sidebarLink.links.map((link) => (
+            <li
+              className={cn(
+                "text-sm text-muted-foreground",
+                pathname === link.href && "font-semibold text-primary"
+              )}
+              key={link.href}>
+              <Link href={link.href}>{link.label}</Link>
+            </li>
+          ))}
+        </ul>
+      ))}
+    </aside>
+  );
+};
+
+const MobileSidebar = ({
+  pathname,
+  sidebarLinks,
+}: {
+  pathname: string;
+  sidebarLinks: SidebarLinks;
+}) => {
+  return (
+    <aside className="py-5">
+      {sidebarLinks.map((sidebarLink) => (
+        <ul key={sidebarLink.title} className="flex flex-col gap-1.5  mb-4 last:mb-0">
+          <li className="font-semibold">{sidebarLink.title}</li>
+          {sidebarLink.links.map((link) => (
+            <li
+              className={cn(
+                "text-sm text-muted-foreground",
+                pathname === link.href && "font-semibold text-primary"
+              )}
+              key={link.href}>
+              <Link className="flex items-center justify-between" href={link.href}>
+                {link.label}
+                {pathname === link.href && (
+                  <span className="text-primary">
+                    <ArrowLeft size={18} />
+                  </span>
+                )}
+              </Link>
+            </li>
+          ))}
+        </ul>
+      ))}
+    </aside>
+  );
+};
+
+const Sidebar = ({ variant }: { variant: "Mobile" | "Desktop" }) => {
   const pathname = usePathname();
 
-  const sidebarLinks = [
+  const sidebarLinks: SidebarLinks = [
     {
       title: "Getting Started",
       links: [{ label: "Introduction", href: "/docs" }],
@@ -20,18 +88,10 @@ const Sidebar = () => {
   ];
 
   return (
-    <aside className="bg-primary-foreground min-w-72 px-5 py-5">
-      {sidebarLinks.map((sidebarLink) => (
-        <ul key={sidebarLink.title} className="flex flex-col gap-1.5 sticky top-24 mb-8 last:mb-0">
-          <li className="font-semibold">{sidebarLink.title}</li>
-          {sidebarLink.links.map((link) => (
-            <li className={cn("text-sm text-muted-foreground", pathname === link.href && "font-semibold text-primary")} key={link.href}>
-              <Link href={link.href}>{link.label}</Link>
-            </li>
-          ))}
-        </ul>
-      ))}
-    </aside>
+    <>
+      {variant === "Desktop" && <DesktopSidebar pathname={pathname} sidebarLinks={sidebarLinks} />}
+      {variant === "Mobile" && <MobileSidebar pathname={pathname} sidebarLinks={sidebarLinks} />}
+    </>
   );
 };
 
