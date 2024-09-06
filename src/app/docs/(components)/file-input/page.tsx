@@ -1,34 +1,43 @@
 import Link from "next/link";
 
+// Components
+import PageHeader from "@/components/page-header";
+import PageSection from "@/components/page-section";
+
 export default function Home() {
   return (
-    <div className="p-8 grid grid-cols-[1fr_auto]  gap-x-2  bg-background">
+    <div className="p-8 grid grid-cols-[1fr] md:grid-cols-[1fr_auto]  gap-x-6  bg-background">
       <div>
-        <section className="pb-4" id="intro">
-          <h1 className="font-semibold text-3xl">File Input</h1>
-          <p className="text-muted-foreground mb-4">
-            Upload files with ease using the File Input component.
-          </p>
-        </section>
-        <section className="py-4" id="pre-requisites">
-          <h2 className="font-semibold text-2xl mb-2">Pre-requisites</h2>
+        <PageHeader
+          title="File Input"
+          description="Upload files with ease using the File Input component."
+        />
 
-          <div>
-            <h3 className="font-semibold text-xl">1. shadcn/ui components</h3>
-            <p className="text-muted-foreground mb-4">
-              Import the following schdcn/ui components to use the File Input component.
-            </p>
-            <h3 className="font-semibold text-xl">2. React Hook Form</h3>
-            <p className="text-muted-foreground mb-4">Install the React Hook Form library.</p>
-          </div>
-        </section>
+        <PageSection
+          title="Pre-requisites"
+          description="Upload files with ease using the File Input component."
+          subSections={[
+            {
+              title: "shadcn/ui Components",
+              description:
+                "Import the following schdcn/ui components to use the File Input component.",
+              code: ["`npx` shadcn@latest add input"],
+            },
+            {
+              title: "React Hook Form Package",
+              description: "Install the React Hook Form library.",
+              code: ["`npm` i react-hook-form"],
+            },
+          ]}
+        />
       </div>
-      <div>
+
+      <div className="hidden md:block">
         <ul className="flex flex-col gap-1 text-sm bg-muted px-6 py-4 rounded-lg min-w-[12rem] sticky top-32">
           <li className="font-semibold text-base">On this page</li>
-          {[{ label: "Intro", href: "#intro" }].map((link) => (
-            <li key={link.href}>
-              <Link href={link.href}>{link.label}</Link>
+          {[{ label: "Pre-requisites" }].map((link) => (
+            <li key={link.label.toLocaleLowerCase()}>
+              <Link href={"#" + link.label.toLocaleLowerCase()}>{link.label}</Link>
             </li>
           ))}
         </ul>

@@ -8,6 +8,7 @@ import { Sidebar } from "@/components/sidebar";
 import { Main } from "@/components/main";
 
 import "./globals.css";
+import { Toaster } from "sonner";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -40,11 +41,12 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange>
           <Navbar />
-          <section className="grid grid-cols-[auto_1fr]  max-w-screen-xl mx-auto gap-x-2  h-[calc(100dvh-69px)] bg-background">
+          <section className="grid lg:grid-cols-[auto_1fr]  max-w-screen-xl mx-auto gap-x-2  h-[calc(100dvh-69px)] bg-background">
             <Sidebar variant="Desktop" />
             <Main>{children}</Main>
           </section>
         </ThemeProvider>
+        <Toaster position="top-center" richColors />
       </body>
     </html>
   );
