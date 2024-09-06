@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 
 export default function Home() {
   return (
-    <div className="p-8 max-w-2xl">
+    <div className="px-5 lg:px-8 max-w-2xl">
       <h1 className="font-semibold text-3xl">shadcn/ui File Component</h1>
       <p className="text-muted-foreground mb-4">
         A reusable file input component built on top of shadcn/ui reusable components, designed for

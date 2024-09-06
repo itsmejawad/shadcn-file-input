@@ -6,7 +6,7 @@ import PageSection from "@/components/page-section";
 
 export default function Home() {
   return (
-    <div className="p-8 grid grid-cols-[1fr] md:grid-cols-[1fr_auto]  gap-x-6  bg-background">
+    <div className="px-5 lg:px-8 grid grid-cols-[1fr] md:grid-cols-[1fr_auto]  gap-x-6  bg-background">
       <div>
         <PageHeader
           title="File Input"
