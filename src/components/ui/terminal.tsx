@@ -21,14 +21,16 @@ const Terminal = ({ text }: { text: string[] }) => {
   };
 
   return (
-    <div className="bg-primary pl-5 pr-3 py-4 rounded-lg text-primary-foreground font-[family-name:var(--font-geist-mono)] text-sm flex justify-between items-center">
+    <div className="dark:bg-secondary bg-primary dark:text-primary border-[0.75px] border-neutral-700 pl-5 pr-3 py-2.5 rounded-lg text-primary-foreground font-[family-name:var(--font-geist-mono)] text-sm flex justify-between items-center">
       <div className="flex flex-col gap-1">
         {text.map((line, index) => (
           <pre className="block" key={index}>
             {line.split("`").map((segment, i) => (
               <span
                 key={i}
-                className={cn(i % 2 === 1 ? "font-semibold" : "text-primary-foreground/80")}>
+                className={cn(
+                  i % 2 === 1 ? "font-semibold" : "text-primary-foreground/80 dark:text-primary/70"
+                )}>
                 {segment}
               </span>
             ))}

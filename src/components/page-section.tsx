@@ -12,7 +12,7 @@ const PageSection = ({
   subSections: SubSection;
 }) => {
   return (
-    <section id={"#" + title.toLocaleLowerCase()}>
+    <section id={"#" + title.toLocaleLowerCase()} className="mb-14 border-b">
       <div className="border-b pb-4 mb-4">
         <h2 className="text-2xl font-semibold">{title}</h2>
         <p className="text-muted-foreground ">{description}</p>
