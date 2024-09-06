@@ -10,6 +10,8 @@ import { cn } from "@/lib/utils";
 import { SidebarLinks } from "@/types/SidebarLinks";
 import { ArrowLeft } from "lucide-react";
 
+// Components
+
 const DesktopSidebar = ({
   pathname,
   sidebarLinks,
@@ -19,28 +21,32 @@ const DesktopSidebar = ({
 }) => {
   return (
     <aside className="min-w-72 px-5 py-5 hidden lg:block border-r">
-      {sidebarLinks.map((sidebarLink) => (
-        <ul key={sidebarLink.title} className="flex flex-col gap-1.5 sticky top-24 mb-8 last:mb-0">
-          <li className="font-semibold">{sidebarLink.title}</li>
-          {sidebarLink.links.map((link) => (
-            <li
-              className={cn(
-                "text-sm text-muted-foreground",
-                pathname === link.href && "font-semibold text-primary"
-              )}
-              key={link.href}>
-              <Link className="flex items-center justify-between" href={link.href}>
-                {link.label}
-                {pathname === link.href && (
-                  <span className="text-primary">
-                    <ArrowLeft size={16} />
-                  </span>
-                )}
-              </Link>{" "}
+      <ul className="flex flex-col gap-1.5 last:mb-0 sticky top-24">
+        {sidebarLinks.map((sidebarLink) => (
+          <>
+            <li key={sidebarLink.title} className="font-semibold mb-1 mt-4 first:mt-0">
+              {sidebarLink.title}
             </li>
-          ))}
-        </ul>
-      ))}
+            {sidebarLink.links.map((link) => (
+              <li
+                className={cn(
+                  "text-sm text-muted-foreground",
+                  pathname === link.href && "font-semibold text-primary"
+                )}
+                key={link.href}>
+                <Link className="flex items-center justify-between" href={link.href}>
+                  {link.label}
+                  {pathname === link.href && (
+                    <span className="text-primary">
+                      <ArrowLeft size={16} />
+                    </span>
+                  )}
+                </Link>
+              </li>
+            ))}
+          </>
+        ))}
+      </ul>
     </aside>
   );
 };

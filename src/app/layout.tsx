@@ -32,10 +32,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased bg-background  font-[family-name:var(--font-geist-sans)]`}>
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-background  font-[family-name:var(--font-geist-sans)]`}>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange>
           <Navbar />
-          <section className="grid grid-cols-[auto_1fr] max-w-screen-xl mx-auto gap-x-2  h-[calc(100dvh-69px)] bg-background">
+          <section className="grid grid-cols-[auto_1fr]  max-w-screen-xl mx-auto gap-x-2  h-[calc(100dvh-69px)] bg-background">
             <Sidebar variant="Desktop" />
             <Main>{children}</Main>
           </section>

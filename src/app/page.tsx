@@ -16,8 +16,10 @@ export default function Home() {
         <Button size="lg" asChild>
           <Link href="/docs">Start now</Link>
         </Button>
-        <Button size="lg" variant="secondary">
-          Github Repository
+        <Button size="lg" variant="secondary" asChild>
+          <Link href="https://github.com/itsmejawad/shadcn-file-input" target="_blank">
+            Github Repository
+          </Link>
         </Button>
       </div>
     </div>
