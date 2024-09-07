@@ -31,16 +31,21 @@ const fileInputVariantsV1 = cva("flex items-center justify-center", {
 
 export interface FileInputProps extends VariantProps<typeof fileInputVariantsV1> {
   className?: string;
+  fileRef: any;
 }
 
-const FileInputV1: React.FC<FileInputProps> = ({ className, variant, size, ...props }, ref) => {
+const FileInputV1: React.FC<FileInputProps> = ({ className, variant, size, fileRef }) => {
+  const inputRef = React.useRef<HTMLInputElement>(null);
+
+  const handleClick = () => {};
+
   return (
     <Label
+      htmlFor="file"
       className={cn(fileInputVariantsV1({ variant, size, className }))}
-      {...props}
-      htmlFor="file">
+      onClick={handleClick}>
       Upload File
-      <Input className="!sr-only" id="file" type="file" ref={ref} />
+      <Input className="!sr-only" {...fileRef} type="file" />
     </Label>
   );
 };

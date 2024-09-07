@@ -1,5 +1,0 @@
-
-npx shadcn@latest add input
-npx shadcn@latest add label
-
-// Fixed the the aligning issue

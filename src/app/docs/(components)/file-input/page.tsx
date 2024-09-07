@@ -3,7 +3,8 @@ import Link from "next/link";
 // Components
 import { PageHeader } from "@/components/page-header";
 import { PageSection } from "@/components/page-section";
-import { FileInputV1 } from "@/components/file-input-v1";
+
+import { FormTemplate } from "@/components/form-template";
 
 export default function Home() {
   return (
@@ -16,10 +17,7 @@ export default function Home() {
 
         <PageSection title="Preview" description="">
           <div className="w-full border h-96 rounded-lg flex items-center justify-center">
-            <form>
-              <FileInputV1 />
-              <button type="submit">Submit</button>
-            </form>
+            <FormTemplate />
           </div>
         </PageSection>
 
