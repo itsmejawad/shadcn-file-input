@@ -32,8 +32,6 @@ const FormTemplate = () => {
     console.log(values);
   }
 
-  const formData = form.watch();
-
   const fileRef = form.register("file");
 
   return (
@@ -42,7 +40,7 @@ const FormTemplate = () => {
         <FormField
           control={form.control}
           name="file"
-          render={({ field }) => (
+          render={({}) => (
             <FormItem>
               <FormControl>
                 <FileInputV1 fileRef={fileRef} />

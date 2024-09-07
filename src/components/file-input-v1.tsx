@@ -6,6 +6,7 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
+import { UseFormRegisterReturn } from "react-hook-form";
 
 const fileInputVariantsV1 = cva("flex items-center justify-center", {
   variants: {
@@ -31,11 +32,11 @@ const fileInputVariantsV1 = cva("flex items-center justify-center", {
 
 export interface FileInputProps extends VariantProps<typeof fileInputVariantsV1> {
   className?: string;
-  fileRef: any;
+  fileRef: UseFormRegisterReturn<"file">;
 }
 
 const FileInputV1: React.FC<FileInputProps> = ({ className, variant, size, fileRef }) => {
-  const inputRef = React.useRef<HTMLInputElement>(null);
+  // const inputRef = React.useRef<HTMLInputElement>(null);
 
   const handleClick = () => {};
 
