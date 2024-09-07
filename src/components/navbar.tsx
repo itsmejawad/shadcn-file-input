@@ -12,7 +12,7 @@ import { Sidebar } from "@/components/sidebar";
 
 const Navbar = () => {
   return (
-    <header className="py-4 border-b sticky top-0 bg-background">
+    <header className="py-4 border-b  bg-background">
       <nav className=" flex justify-between items-center mx-auto max-w-screen-xl px-5">
         <Button className="bg-primary/10" variant="ghost" asChild>
           <Link href="/" className="font-semibold">

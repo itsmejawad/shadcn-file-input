@@ -1,2 +1,5 @@
-Pre-requisites for this component:
-- npm i react-hook-form
+
+npx shadcn@latest add input
+npx shadcn@latest add label
+
+// Fixed the the aligning issue

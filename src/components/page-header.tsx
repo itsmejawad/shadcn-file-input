@@ -9,4 +9,4 @@ const PageHeader = ({ title, description }: { title: string; description: string
   );
 };
 
-export default PageHeader;
+export { PageHeader };

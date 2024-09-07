@@ -23,12 +23,10 @@ const DesktopSidebar = ({
     <aside className="min-w-72 px-5 py-5 hidden lg:block border-r">
       <ul className="flex flex-col gap-1.5 last:mb-0 sticky top-24">
         {sidebarLinks.map((sidebarLink) => (
-          <>
-            <li key={sidebarLink.title} className="font-semibold mb-1 mt-4 first:mt-0">
-              {sidebarLink.title}
-            </li>
+          <li key={sidebarLink.title}>
+            <h3 className="font-semibold mb-1 mt-4 first:mt-0">{sidebarLink.title}</h3>
             {sidebarLink.links.map((link) => (
-              <li
+              <p
                 className={cn(
                   "text-sm text-muted-foreground",
                   pathname === link.href && "font-semibold text-primary"
@@ -42,9 +40,9 @@ const DesktopSidebar = ({
                     </span>
                   )}
                 </Link>
-              </li>
+              </p>
             ))}
-          </>
+          </li>
         ))}
       </ul>
     </aside>
