@@ -1,12 +1,23 @@
 import * as React from "react";
 
 import { cva, type VariantProps } from "class-variance-authority";
+import { cn } from "@/lib/utils";
+
+// Interfaces
+import { UseFormRegisterReturn } from "react-hook-form";
 
 // Components
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { cn } from "@/lib/utils";
-import { UseFormRegisterReturn } from "react-hook-form";
+import { FormControl, FormDescription, FormLabel } from "@/components/ui/form";
+
+const formatFileSize = (sizeInBytes: number): { size: string; unit: string } => {
+  if (sizeInBytes >= 1024 * 1024) {
+    return { size: (sizeInBytes / 1024 / 1024).toFixed(2), unit: "MB" };
+  } else if (sizeInBytes >= 1024) {
+    return { size: (sizeInBytes / 1024).toFixed(2), unit: "KB" };
+  }
+  return { size: sizeInBytes.toFixed(2), unit: "bytes" };
+};
 
 const fileInputVariantsV1 = cva("flex items-center justify-center", {
   variants: {
@@ -31,26 +42,51 @@ const fileInputVariantsV1 = cva("flex items-center justify-center", {
 });
 
 export interface FileInputProps extends VariantProps<typeof fileInputVariantsV1> {
+  showFileSize?: boolean;
   className?: string;
   fileRef: UseFormRegisterReturn<"file">;
 }
 
-const FileInputV1: React.FC<FileInputProps> = ({ className, variant, size, fileRef }) => {
-  // const inputRef = React.useRef<HTMLInputElement>(null);
+const FileInputV1: React.FC<FileInputProps> = ({
+  className,
+  variant,
+  size,
+  fileRef,
+  showFileSize,
+}) => {
+  const [fileInfo, setFileInfo] = React.useState<{ size: string; unit: string } | null>(null);
 
-  const handleClick = () => {};
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const { size, unit } = formatFileSize(file.size);
+      setFileInfo({ size, unit });
+    }
+  };
 
   return (
-    <Label
-      htmlFor="file"
-      className={cn(fileInputVariantsV1({ variant, size, className }))}
-      onClick={handleClick}>
-      Upload File
-      <Input className="!sr-only" {...fileRef} type="file" />
-    </Label>
+    <>
+      <FormLabel htmlFor="file" className={cn(fileInputVariantsV1({ variant, size, className }))}>
+        Upload File
+      </FormLabel>
+      <FormControl>
+        <Input
+          id="file"
+          className="!sr-only"
+          {...fileRef}
+          type="file"
+          onChange={handleInputChange}
+        />
+      </FormControl>
+      <FormDescription>
+        {showFileSize && fileInfo && (
+          <p className="block">
+            Size: {fileInfo.size} {fileInfo.unit}
+          </p>
+        )}
+      </FormDescription>
+    </>
   );
 };
-
-FileInputV1.displayName = "FileInput";
 
 export { FileInputV1, fileInputVariantsV1 };

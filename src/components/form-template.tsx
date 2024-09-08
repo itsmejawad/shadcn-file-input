@@ -9,14 +9,7 @@ import { z } from "zod";
 // Components
 import { FileInputV1 } from "@/components/file-input-v1";
 import { Button } from "@/components/ui/button";
-import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormMessage,
-} from "@/components/ui/form";
+import { Form, FormField, FormItem, FormMessage } from "@/components/ui/form";
 
 // Zod Schema
 const formSchema = z.object({
@@ -42,10 +35,7 @@ const FormTemplate = () => {
           name="file"
           render={({}) => (
             <FormItem>
-              <FormControl>
-                <FileInputV1 fileRef={fileRef} />
-              </FormControl>
-              <FormDescription>This is your public display name.</FormDescription>
+              <FileInputV1 showFileSize={true} fileRef={fileRef} />
               <FormMessage />
             </FormItem>
           )}
