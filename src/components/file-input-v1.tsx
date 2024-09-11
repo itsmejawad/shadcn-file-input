@@ -9,17 +9,9 @@ import { UseFormRegisterReturn } from "react-hook-form";
 // Components
 import { Input } from "@/components/ui/input";
 import { FormControl, FormDescription, FormLabel } from "@/components/ui/form";
+import { UploadCloudIcon } from "lucide-react";
 
-const formatFileSize = (sizeInBytes: number): { size: string; unit: string } => {
-  if (sizeInBytes >= 1024 * 1024) {
-    return { size: (sizeInBytes / 1024 / 1024).toFixed(2), unit: "MB" };
-  } else if (sizeInBytes >= 1024) {
-    return { size: (sizeInBytes / 1024).toFixed(2), unit: "KB" };
-  }
-  return { size: sizeInBytes.toFixed(2), unit: "bytes" };
-};
-
-const fileInputVariantsV1 = cva("flex items-center justify-center", {
+const fileInputVariantsV1 = cva("flex items-center justify-center rounded-md cursor-pointer", {
   variants: {
     variant: {
       default: "bg-primary text-primary-foreground shadow hover:bg-primary/90",
@@ -41,9 +33,19 @@ const fileInputVariantsV1 = cva("flex items-center justify-center", {
   },
 });
 
+const formatFileSize = (sizeInBytes: number): { size: string; unit: string } => {
+  if (sizeInBytes >= 1024 * 1024) {
+    return { size: (sizeInBytes / 1024 / 1024).toFixed(2), unit: "MB" };
+  } else if (sizeInBytes >= 1024) {
+    return { size: (sizeInBytes / 1024).toFixed(2), unit: "KB" };
+  }
+  return { size: sizeInBytes.toFixed(2), unit: "bytes" };
+};
+
 export interface FileInputProps extends VariantProps<typeof fileInputVariantsV1> {
   showFileSize?: boolean;
   showFileType?: boolean;
+  showUploadIcon?: boolean;
   className?: string;
   fileRef: UseFormRegisterReturn<"file">;
 }
@@ -53,6 +55,7 @@ const FileInputV1: React.FC<FileInputProps> = ({
   variant,
   size,
   fileRef,
+  showUploadIcon,
   showFileSize,
   showFileType,
 }) => {
@@ -62,9 +65,11 @@ const FileInputV1: React.FC<FileInputProps> = ({
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
+      /* SHOW FILE SIZE. */
       const { size, unit } = formatFileSize(file.size);
       setFileInfo({ size, unit });
-      // get file extension e.g., png, pdf, exe.
+
+      /* SHOW FILE EXTENSION (E.G., PNG.). */
       const extension = file.name.split(".").pop();
       setFileType(extension);
     }
@@ -74,6 +79,7 @@ const FileInputV1: React.FC<FileInputProps> = ({
     <>
       <FormLabel htmlFor="file" className={cn(fileInputVariantsV1({ variant, size, className }))}>
         Upload File
+        {showUploadIcon && <UploadCloudIcon className="w-4 h-4 ml-2" />}
       </FormLabel>
       <FormControl>
         <Input
@@ -84,13 +90,14 @@ const FileInputV1: React.FC<FileInputProps> = ({
           onChange={handleInputChange}
         />
       </FormControl>
-      <FormDescription>
+
+      <FormDescription className="flex flex-col">
         {showFileSize && fileInfo && (
-          <p className="block">
+          <span>
             Size: {fileInfo.size} {fileInfo.unit}
-          </p>
+          </span>
         )}
-        {showFileType && fileType && <p className="block">Type: {fileType}</p>}
+        {showFileType && fileType && <span>Type: {fileType}</span>}
       </FormDescription>
     </>
   );

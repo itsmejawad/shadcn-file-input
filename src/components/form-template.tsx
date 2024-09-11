@@ -12,20 +12,28 @@ import { Button } from "@/components/ui/button";
 import { Form, FormField, FormItem, FormMessage } from "@/components/ui/form";
 
 // Zod Schema
-const formSchema = z.object({
-  file: typeof window === "undefined" ? z.any() : z.instanceof(FileList),
+export const formSchema = z.object({
+  file:
+    typeof window === "undefined"
+      ? z.any()
+      : z
+          .instanceof(FileList)
+          .refine((value) => value[0]?.size <= 1024 * 1024, "File size should be less than 1MB"),
 });
 
 const FormTemplate = () => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
+    reValidateMode: "onChange",
+    mode: "onChange",
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values);
   }
-
   const fileRef = form.register("file");
+
+  console.log(form.watch("file"));
 
   return (
     <Form {...form}>
@@ -35,7 +43,14 @@ const FormTemplate = () => {
           name="file"
           render={({}) => (
             <FormItem>
-              <FileInputV1 showFileSize={true} showFileType={true} fileRef={fileRef} />
+              <FileInputV1
+                showFileSize={true}
+                showFileType={true}
+                showUploadIcon={true}
+                fileRef={fileRef}
+                size="lg"
+                className="w-52"
+              />
               <FormMessage />
             </FormItem>
           )}
