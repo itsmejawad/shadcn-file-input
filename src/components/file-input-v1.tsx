@@ -45,7 +45,9 @@ const formatFileSize = (sizeInBytes: number): { size: string; unit: string } => 
 export interface FileInputProps extends VariantProps<typeof fileInputVariantsV1> {
   showFileSize?: boolean;
   showFileType?: boolean;
+  showFileName?: boolean;
   showUploadIcon?: boolean;
+  changeFileName?: string;
   className?: string;
   fileRef: UseFormRegisterReturn<"file">;
 }
@@ -58,9 +60,12 @@ const FileInputV1: React.FC<FileInputProps> = ({
   showUploadIcon,
   showFileSize,
   showFileType,
+  showFileName,
+  changeFileName,
 }) => {
   const [fileInfo, setFileInfo] = React.useState<{ size: string; unit: string } | null>(null);
   const [fileType, setFileType] = React.useState<string | undefined>(undefined);
+  const [fileName, setFileName] = React.useState<string | undefined>(undefined);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -69,9 +74,27 @@ const FileInputV1: React.FC<FileInputProps> = ({
       const { size, unit } = formatFileSize(file.size);
       setFileInfo({ size, unit });
 
+      setFileName(file.name);
+
       /* SHOW FILE EXTENSION (E.G., PNG.). */
       const extension = file.name.split(".").pop();
       setFileType(extension);
+
+      /* SET FILE NAME */
+      setFileName(file.name);
+
+      /* CHANGE THE UPLOADED FILE NAME TO PANDA */
+      if (changeFileName) {
+        const newFile = new File([file], `${(changeFileName || file.name) + "." + extension}`, {
+          type: file.type,
+        });
+        const dataTransfer = new DataTransfer();
+        dataTransfer.items.add(newFile);
+        e.target.files = dataTransfer.files;
+
+        /* SET NEW FILE NAME */
+        setFileName(newFile.name);
+      }
     }
   };
 
@@ -98,6 +121,7 @@ const FileInputV1: React.FC<FileInputProps> = ({
           </span>
         )}
         {showFileType && fileType && <span>Type: {fileType}</span>}
+        {showFileName && fileType && <span>Name: {fileName}</span>}
       </FormDescription>
     </>
   );

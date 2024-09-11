@@ -44,9 +44,11 @@ const FormTemplate = () => {
           render={({}) => (
             <FormItem>
               <FileInputV1
+                showUploadIcon={true}
                 showFileSize={true}
                 showFileType={true}
-                showUploadIcon={true}
+                showFileName={true}
+                changeFileName="username"
                 fileRef={fileRef}
                 size="lg"
                 className="w-52"
