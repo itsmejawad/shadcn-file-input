@@ -43,6 +43,7 @@ const fileInputVariantsV1 = cva("flex items-center justify-center", {
 
 export interface FileInputProps extends VariantProps<typeof fileInputVariantsV1> {
   showFileSize?: boolean;
+  showFileType?: boolean;
   className?: string;
   fileRef: UseFormRegisterReturn<"file">;
 }
@@ -53,14 +54,19 @@ const FileInputV1: React.FC<FileInputProps> = ({
   size,
   fileRef,
   showFileSize,
+  showFileType,
 }) => {
   const [fileInfo, setFileInfo] = React.useState<{ size: string; unit: string } | null>(null);
+  const [fileType, setFileType] = React.useState<string | undefined>(undefined);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
       const { size, unit } = formatFileSize(file.size);
       setFileInfo({ size, unit });
+      // get file extension e.g., png, pdf, exe.
+      const extension = file.name.split(".").pop();
+      setFileType(extension);
     }
   };
 
@@ -84,6 +90,7 @@ const FileInputV1: React.FC<FileInputProps> = ({
             Size: {fileInfo.size} {fileInfo.unit}
           </p>
         )}
+        {showFileType && fileType && <p className="block">Type: {fileType}</p>}
       </FormDescription>
     </>
   );

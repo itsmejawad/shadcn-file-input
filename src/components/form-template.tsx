@@ -35,7 +35,7 @@ const FormTemplate = () => {
           name="file"
           render={({}) => (
             <FormItem>
-              <FileInputV1 showFileSize={true} fileRef={fileRef} />
+              <FileInputV1 showFileSize={true} showFileType={true} fileRef={fileRef} />
               <FormMessage />
             </FormItem>
           )}
